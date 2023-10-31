@@ -1,6 +1,7 @@
 package utils;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.Assert;
@@ -53,9 +54,25 @@ public class commonActions {
 			System.out.println("Update: "+e);
 		}	
 	}
+	
+	public void clickOnText(String value) {
+		WebElement ele = driver.findElement(AppiumBy.xpath("//*[@text = '"+ value +"']"));
+		try {
+			ele.click();
+			System.out.println("Clicked on text");
+		} catch (StaleElementReferenceException e) {
+			ele = driver.findElement(AppiumBy.xpath("//*[text() = '"+ value +"']"));
+			ele.click();
+			System.out.println("Clicked on text");
+		}
+	}
 
 	public void clickOnElement(WebElement ele) {
 		ele.click();
+	}
+	
+	public void sendTextToElement(WebElement ele, String value) {
+		ele.sendKeys(value);			
 	}
 	
 	public void navigateBack() {
@@ -72,13 +89,24 @@ public class commonActions {
 		Assert.assertEquals(ele.getAttribute("focusable"),"false");
 	}
 	public void validateIfCorrectText(String str1, String str2) {
-		
 		Assert.assertEquals(str1,str2);
-	
 	}
+	
+	public void validateIfCorrectText(WebElement ele, String expectedValue) {
+		String actualValue = ele.getText();
+		Assert.assertEquals(actualValue,expectedValue);
+	}
+	
 	public void validateIfDisplayedTrue(WebElement ele) {
-		Assert.assertTrue(ele.isDisplayed());
-		System.out.println("Element is displayed");
+		try {
+			Assert.assertTrue(ele.isDisplayed());
+			System.out.println("Element is displayed");	
+		} catch (StaleElementReferenceException e) {
+			WebElement ele1 = ele;
+			Assert.assertTrue(ele1.isDisplayed());
+			System.out.println("Element is displayed");			
+		}
+		
 	}
 	public void validateIfDisplayedFalse(WebElement ele) {
 		Assert.assertFalse(ele.isDisplayed());

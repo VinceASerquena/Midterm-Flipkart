@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="scripts.OpenAndNavigateApp">
+      <class name="scripts.TC1_CreateAccount">
         <methods>
+          <include name="creatAccount"/>
           <include name="tearDown"/>
           <include name="startServerwithApp"/>
-          <include name="navigateFirstPage"/>
         </methods>
-      </class> <!-- scripts.OpenAndNavigateApp -->
+      </class> <!-- scripts.TC1_CreateAccount -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Properties;
 
 import org.testng.annotations.AfterTest;
@@ -13,14 +14,12 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-import pageObjects.FirstActivityPage;
-import pageObjects.ViewsPage;
+import pageObjects.HomePage;
 
 public class BaseClass {
 	AppiumDriverLocalService service;
 	protected AndroidDriver driver;
-	protected FirstActivityPage faPage;
-	protected ViewsPage viewPage;
+	protected HomePage homePage;
 	
 	
 	@BeforeTest
@@ -37,15 +36,13 @@ public class BaseClass {
 		service.start();
 		UiAutomator2Options options=new UiAutomator2Options();
 		options.setDeviceName(deviceName);		
-//		options.setApp(System.getProperty("user.dir")+"\\src\\main\\resources\\appUsed\\Flipkart.apk");
-		options.setApp("C:\\Users\\COLLABERA.DIGITAL\\Desktop\\Midterm\\Flipkart.apk");
+		options.setApp(System.getProperty("user.dir")+"\\src\\main\\resources\\appUsed\\General-Store.apk");
 		options.setCapability("appium:autoGrantPermissions", true);
-		options.setCapability("appium:appWaitActivity", "com.flipkart.android.activity.FirstLaunchActivity");
 		driver=new AndroidDriver(new URL("http://127.0.0.1:4723"),options);
-//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));	
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));	
 		
-		faPage = new FirstActivityPage(driver);
-		viewPage = new ViewsPage(driver);
+		homePage = new HomePage(driver);
+
 	}
 	
 	@AfterTest
