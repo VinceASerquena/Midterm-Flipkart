@@ -44,4 +44,7 @@ public class HomePage extends commonActions{
 	@AndroidFindBy(id="com.androidsample.generalstore:id/toolbar_title")
 	public WebElement Products_Header;
 	
+	
+	@AndroidFindBy(xpath="//android.widget.Toast[@text, 'Please enter your name']")
+	public WebElement Toast_Error_Message;
 }

@@ -1,5 +1,6 @@
 package utils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -111,5 +112,20 @@ public class commonActions {
 	public void validateIfDisplayedFalse(WebElement ele) {
 		Assert.assertFalse(ele.isDisplayed());
 		System.out.println("Element is not displayed");
+	}
+	
+	public void validateToast(String toast) {
+		WebElement toastEle = driver.findElement(By.xpath("//android.widget.Toast[1]"));
+		try {
+			String toastValue = toastEle.getText();
+			Assert.assertTrue(toastValue.contentEquals(toast));
+			System.out.println("Error Toast Message is Displayed");
+		} catch (StaleElementReferenceException e) {
+			toastEle = driver.findElement(By.xpath("//android.widget.Toast[1]"));
+			String toastValue = toastEle.getText();
+			Assert.assertTrue(toastValue.contentEquals(toast));
+			System.out.println("Error Toast Message is Displayed");
+		}
+		
 	}
 }
